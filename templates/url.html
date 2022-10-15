@@ -1,0 +1,12 @@
+{%extends 'base.html'%}
+{%block title%}
+URL
+{%endblock%}
+{%block body%}
+<div class='url'>
+	<h1>Your short url is</h1>
+	<p>{{short_url}}</p>
+	<button onclick="copy()" type="submit">Button</button>
+</div>
+
+{%endblock%}

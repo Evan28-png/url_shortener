@@ -1,7 +1,8 @@
 import os
+import random
 from dotenv import load_dotenv
 load_dotenv()
-from flask import Flask, request, url_for, render_template, redirect
+from flask import Flask, request, url_for, render_template, redirect, g
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from flask_sqlalchemy import SQLAlchemy 
@@ -36,8 +37,12 @@ def index():
     if request.method == 'POST':
         form = Url_form()
         if form.validate_on_submit():
-
-            return redirect(url_for('url'))
+            url = request.values.get('url')
+            short_url = f'evan.ly{random.randint(1,48748374823749)}'
+            url = Url(original_url=url, short_url=short_url)
+            db.session.add(url)
+            db.session.commit()
+            return render_template('url.html', short_url=short_url)
     return render_template('index.html', form=Url_form())
 
 

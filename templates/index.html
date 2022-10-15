@@ -4,6 +4,17 @@ url_shortner
 {%endblock%}
 
 {%block body%}
-<h1><center><u>Shorten your url<u><center></h1>
-
+<h1><center><u>Shorten your url</u><center></h1>
+<form method='POST'>
+	{{form.hidden_tag()}}
+	<div class='foo'>
+	{{form.url.label}}<br>
+	</div>
+	<div class='foo'>
+	{{form.url()}}<br>
+	</div>
+	<div class='foo'>
+	{{form.submit()}}
+	</div>
+</form>
 {%endblock%}
