@@ -38,7 +38,7 @@ def index():
         form = Url_form()
         if form.validate_on_submit():
             url = request.values.get('url')
-            short_url = f'evan.ly{random.randint(1,48748374823749)}'
+            short_url = f'http://127.0.0.1:5000/evan/ly{random.randint(1,487483749)}'
             url = Url(original_url=url, short_url=short_url)
             db.session.add(url)
             db.session.commit()
@@ -46,9 +46,12 @@ def index():
     return render_template('index.html', form=Url_form())
 
 
-@app.route('/url')
-def url():
-    return render_template('url.html')
+@app.route('/evan/<url>')
+def url(url):
+    get_url = f'http://127.0.0.1:5000/evan/{url}'
+    original_url = Url.query.filter_by(short_url=get_url).first()
+    original_url = original_url.original_url
+    return redirect(original_url)
 
 
 if __name__ == '__main__':
