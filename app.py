@@ -1,7 +1,7 @@
 import os
 import random
-from dotenv import load_dotenv
-load_dotenv()
+#from dotenv import load_dotenv
+#load_dotenv()
 from flask import Flask, request, url_for, render_template, redirect, g
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
@@ -10,9 +10,9 @@ from flask_migrate import Migrate
 
 
 app = Flask(__name__)
-app.config['SECRET_KEY']=os.environ['SECRET_KEY']
-app.config['SQLALCHEMY_DATABASE_URI']=os.environ['SQLALCHEMY_DATABASE_URI']
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=os.environ['SQLALCHEMY_TRACK_MODIFICATIONS']
+app.config['SECRET_KEY']='SECRET_KEY'
+app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///url.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=True
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
@@ -42,6 +42,7 @@ def index():
             url = Url(original_url=url, short_url=short_url)
             db.session.add(url)
             db.session.commit()
+            print('added')
             return render_template('url.html', short_url=short_url)
     return render_template('index.html', form=Url_form())
 
